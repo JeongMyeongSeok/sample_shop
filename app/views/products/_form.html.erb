@@ -1,0 +1,5 @@
+<%= form_for( current_user.cart_details.build(product_id: @product.id) ) do |f| %>
+  <div><%= f.number_field :quantity, value: 1,  max: 10, min: 1 %></div>
+  <div><%= f.hidden_field :product_id %></div>
+  <%= f.submit "カートに入れる", class: "btn btn-large btn-primary" %>
+<% end %>

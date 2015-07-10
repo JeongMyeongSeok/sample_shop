@@ -6,8 +6,11 @@
     <div class="span10">
       <div class="column">
       <div class="span10"><h3><%= @product.name %></h3>
-      <h5>在庫 : <%= @product.stock %></h5></div>
+      <h4><%= @product.price %>円 </h4>
+      <h5>在庫 : <%= @product.stock %></h5>
       </div>
+      </div>
+        <%= render "form" %>
     </div>
   </div>
 </div>
