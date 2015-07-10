@@ -1,0 +1,13 @@
+<div class="container-fluid">
+  <div class="row-fluid">
+    <div class="span2">
+      <%= image_tag(@product.picture, size: "250x250") %>
+    </div>
+    <div class="span10">
+      <div class="column">
+      <div class="span10"><h3><%= @product.name %></h3>
+      <h5>在庫 : <%= @product.stock %></h5></div>
+      </div>
+    </div>
+  </div>
+</div>
