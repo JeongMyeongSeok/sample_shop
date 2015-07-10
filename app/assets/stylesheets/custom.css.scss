@@ -161,7 +161,7 @@ aside {
 /* forms */
 
 input, textarea, select, .uneditable-input {
-  border: 1px solid #bbb;
+  border: 50px solid #bbb;
   width: 100%;
   padding: 10px;
   margin-bottom: 15px;
@@ -171,10 +171,6 @@ input, textarea, select, .uneditable-input {
 input {
   height: auto !important;
 }
-
-
-
-/* forms */
 
 
 #error_explanation {
