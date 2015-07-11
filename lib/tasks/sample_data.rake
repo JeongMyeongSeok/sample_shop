@@ -23,16 +23,14 @@ def make_users
 end
 
 def make_products
-  Product.create!(name: "Harry Potter and the Sorcerer's Stone",
-                  price: 2000, stock: 100,
-                  picture: "http://ecx.images-amazon.com/images/I/51MU5VilKpL._SX338_BO1,204,203,200_.jpg")
-  Product.create!(name: "Rubyによるクローラー開発技法",
-                  price: 3000, stock: 100,
-                  picture: "http://ecx.images-amazon.com/images/I/51qDobozaNL._SX349_BO1,204,203,200_.jpg")
-  Product.create!(name: "Harry Potter and the Deathly Hallows",
-                  price: 1500, stock: 100,
-                  picture: "http://ecx.images-amazon.com/images/I/51YLjeIs-DL._SX340_BO1,204,203,200_.jpg")
-  Product.create!(name: "初めてのRub",
-                  price: 1000, stock: 100,
-                  picture: "http://ecx.images-amazon.com/images/I/51zUT2zXuQL._SX387_BO1,204,203,200_.jpg")
+  product_lists = { "Bread_toast" => "Bread_toasts.png", 
+    "Coffee_machine" => "Coffee_machine.png", 
+    "Coffee_maker" => "Coffee_maker.png", 
+    "Glass" => "Glass.png", "Hamburger" => "Hamburger.png", 
+    "plastic_cup" => "plastic_cup.png", "Saucepan" => "Saucepan.png",
+    "Coffee_cup" => "Coffee_cup.png", "Knife" => "Knife.png"}
+
+  product_lists.each { |key, value| 
+  Product.create!(name: "#{key}", price: 2000, stock: 100, picture: "#{value}")
+  }
 end
