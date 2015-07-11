@@ -31,6 +31,7 @@ def make_products
     "Coffee_cup" => "Coffee_cup.png", "Knife" => "Knife.png"}
 
   product_lists.each { |key, value| 
-  Product.create!(name: "#{key}", price: 2000, stock: 100, picture: "#{value}")
+    price = rand(2000..5000)
+    Product.create!(name: "#{key}", price: 2000, stock: 100, picture: "#{value}")
   }
 end

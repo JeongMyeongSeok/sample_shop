@@ -25,19 +25,18 @@ class User < ActiveRecord::Base
   def User.encrypt(token)
     Digest::SHA1.hexdigest(token.to_s)
   end
-
-  def get_product(current_user, product, quantity, price)
-    cart_product = cart_details.find_by(user_id: current_user.id, product_id: product.id)
+  
+  def add_product_to_cart(user, product, quantity)
+    cart_product = CartDetail.find_by(user_id: user.id, product_id: product.id)
     if cart_product
-      all_price = cart_product.price.to_i + price.to_i
-      all_quantity = cart_product.quantity.to_i + quantity.to_i
-      cart_product.update(price: all_price)
-      cart_product.update(quantity: all_quantity)
+      all_price = (cart_product.price + product.price)
+      all_quantity = (cart_product.quantity + quantity.to_i)
+      cart_product.update(price: all_price, quantity: all_quantity)
     else
       cart_details.create!(product_id: product.id, quantity: quantity, price: price)
     end
   end
-  
+
   private
 
 

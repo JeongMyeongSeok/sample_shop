@@ -1,2 +1,4 @@
-<%= @cart_detail.price %>
-<%= @cart_detail.quantity %>
+<% @cart_details.each do |cart_detail| %>
+ <p> <%= cart_detail.price %>
+  <%= cart_detail.quantity %></p>
+<% end %>

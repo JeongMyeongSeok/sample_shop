@@ -1,13 +1,21 @@
 class CartDetailsController < ApplicationController
   def show
-    @cart_detail = CartDetail.find_by(id: params[:id])
+    @cart_details = CartDetail.where("user_id = ?", current_user.id)
   end
 
   def create
-    product = Product.find(params[:cart_detail][:product_id])
-    quantity = params[:cart_detail][:quantity]
-    price = quantity.to_i * product.price
-    current_user.get_product(current_user, product, quantity, price)
+    selected_product = Product.find_by(selected_product)
+    selected_quantity = product_quantity
+    current_user.add_product_to_cart(current_user, selected_product, selected_quantity)
     redirect_to cart_detail_path(current_user)
+  end
+
+  private
+  def selected_product
+    params[:cart_detail][:Product_id]
+  end
+
+  def product_quantity
+    params[:cart_detail][:quantity]
   end
 end

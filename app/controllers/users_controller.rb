@@ -4,10 +4,6 @@ class UsersController < ApplicationController
   before_action :correct_user, only: [:edit, :update]
   #before_action :messagesに追加すると、不正アクセスの時に、static_pages/home.html.erbへリダイレクトされる
 
-  def show
-    @user = User.find(params[:id])
-  end
-
   def new
     @user = User.new
   end
@@ -31,7 +27,7 @@ class UsersController < ApplicationController
     if @user.save
       sign_in @user
       flash[:success] = "Welcome"
-      redirect_to @user
+      redirect_to root_url
     else
       render 'new'
     end
