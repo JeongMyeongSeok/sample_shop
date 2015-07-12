@@ -1,4 +1,13 @@
 <% @cart_details.each do |cart_detail| %>
- <p> <%= cart_detail.price %>
-  <%= cart_detail.quantity %></p>
+    <%= link_to image_tag(cart_detail.product.picture, :size => "100x100"),
+    controller: "products", action: "show" ,id: cart_detail.product.id %>
+    <%= cart_detail.price %>円
+      <%= link_to "商品削除", cart_detail, method: :delete,
+                            data: { confirm: "本当ですか?" } %> 
+      <%= form_for(cart_detail) do |f| %>
+        <%= render 'shared/error_messages', object: f.object %>
+        <%= f.label :数量 %>
+        <%= f.number_field :quantity, max: 10, min: 1 %>
+        <%= f.submit "変更", class: "btn btn-small" %>
+      <% end %>
 <% end %>

@@ -29,14 +29,20 @@ class User < ActiveRecord::Base
   def add_product_to_cart(user, product, quantity)
     cart_product = CartDetail.find_by(user_id: user.id, product_id: product.id)
     if cart_product
-      all_price = (cart_product.price + product.price)
+      all_price = (cart_product.price + (product.price * quantity.to_i))
       all_quantity = (cart_product.quantity + quantity.to_i)
       cart_product.update(price: all_price, quantity: all_quantity)
     else
+      price = product.price * quantity.to_i
       cart_details.create!(product_id: product.id, quantity: quantity, price: price)
     end
   end
 
+  def minus_product_in_cart(cart_detail, quantity)
+    #cart_product = CartDetail.find_by(id: params[:id])
+    all_price = (cart_detail.product.price * quantity.to_i)
+    cart_detail.update(price: all_price)
+  end
   private
 
 
