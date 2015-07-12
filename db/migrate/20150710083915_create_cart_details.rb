@@ -1,10 +1,10 @@
 class CreateCartDetails < ActiveRecord::Migration
   def change
     create_table :cart_details do |t|
-      t.integer :user_id
-      t.integer :product_id
-      t.integer :price
-      t.integer :quantity
+      t.integer :user_id,     null: false
+      t.integer :product_id,  null: false
+      t.integer :price,       null: false
+      t.integer :quantity,    null: false
 
       t.timestamps null: false
     end

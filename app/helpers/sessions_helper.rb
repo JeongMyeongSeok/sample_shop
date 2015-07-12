@@ -22,7 +22,6 @@ module SessionsHelper
     @current_user ||= User.find_by(remember_token: remember_token)
   end
 
-  #9
   def current_user?(user)
     user == current_user # 同じ結果 @current_user also self.current_user
   end
@@ -35,7 +34,6 @@ module SessionsHelper
     end
   end
   
-  #9.2.3
   def redirect_back_or(default)
     redirect_to(session[:return_to] || default) #or default
     session.delete(:return_to)

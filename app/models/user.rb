@@ -34,7 +34,7 @@ class User < ActiveRecord::Base
       cart_product.update(price: all_price, quantity: all_quantity)
     else
       price = product.price * quantity.to_i
-      cart_details.create!(product_id: product.id, quantity: quantity, price: price)
+      cart_details.create(product_id: product.id, quantity: quantity, price: price)
     end
   end
 

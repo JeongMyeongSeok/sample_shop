@@ -1,15 +1,13 @@
 class UsersController < ApplicationController
-  before_action :signed_in_user,
-                only: [:index, :edit, :update, :destroy]
+  before_action :signed_in_user, only: [:edit, :update] #署名された
   before_action :correct_user, only: [:edit, :update]
-  #before_action :messagesに追加すると、不正アクセスの時に、static_pages/home.html.erbへリダイレクトされる
 
   def new
     @user = User.new
   end
 
   def edit
-    #@user = User.find(params[:id])
+    
   end
 
   def update
@@ -32,11 +30,6 @@ class UsersController < ApplicationController
       render 'new'
     end
   end
-
-  def destroy
-
-  end
-
 
   private
 

@@ -4,7 +4,7 @@ class CartDetailsController < ApplicationController
   end
 
   def create
-    selected_product = Product.find(params[:cart_detail][:product_id])
+    selected_product = Product.find_by("id = ? ", params[:cart_detail][:product_id])
     selected_quantity = product_quantity
     if current_user.add_product_to_cart(current_user, selected_product, selected_quantity)
       redirect_to cart_detail_path(current_user)
@@ -15,16 +15,16 @@ class CartDetailsController < ApplicationController
   end
 
   def destroy
-    product_destroy = CartDetail.find_by(id: params[:id])
+    product_in_the_cart = selected_product_in_the_cart
     product_destroy.destroy
     redirect_to cart_detail_path(current_user)
   end
 
   def update
-    cart_detail = CartDetail.find_by(id: params[:id])
-    if cart_detail.update_attributes(quantity_param)
+    product_in_the_cart = selected_product_in_the_cart
+    if product_in_the_cart.update_attributes(quantity_param)
       selected_quantity = product_quantity
-      current_user.minus_product_in_cart(cart_detail, selected_quantity)
+      current_user.minus_product_in_cart(product_in_the_cart, selected_quantity)
       redirect_to cart_detail_path(current_user)
     else
       redirect_to cart_detail_path(current_user)
@@ -32,6 +32,10 @@ class CartDetailsController < ApplicationController
   end
 
   private
+
+  def selected_product_in_the_cart
+    CartDetail.find_by(id: params[:id])
+  end
 
   def quantity_param
     params.require(:cart_detail).permit(:quantity)
