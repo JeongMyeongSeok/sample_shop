@@ -7,7 +7,7 @@ class SessionsController < ApplicationController
     if user && user.authenticate(params[:session][:password])
       flash[:success] = "ようこそ"
       sign_in user
-      redirect_to root_url
+      redirect_back_or_default
       #redirect_back_or user
     else
       flash.now[:error] = '有効ではない email あるいは password '

@@ -1,4 +1,6 @@
 class CartDetailsController < ApplicationController
+  before_action :signed_in_user, only: [:show]
+
   def show
     @cart_details = CartDetail.where("user_id = ?", current_user.id)
   end
@@ -9,7 +11,7 @@ class CartDetailsController < ApplicationController
     if current_user.add_product_to_cart(current_user, selected_product, selected_quantity)
       redirect_to cart_detail_path(current_user)
     else
-      flash[:error] = "商品を10個"
+      flash[:error] = "カートに商品を10個以上入れるのはできません"
       redirect_to product_path(selected_product)
     end
   end
