@@ -1,7 +1,13 @@
 class User < ActiveRecord::Base
-
   has_many :cart_details, foreign_key: "user_id", dependent: :destroy
   has_many :products, through: :cart_details, source: :product
+
+  has_many :commonly_used_destinations, foreign_key: "user_id", dependent: :destroy
+
+  has_many :orders, foreign_key: "user_id", dependent: :destroy
+  
+  #has_many :cart_details, foreign_key: "user_id", dependent: :destroy
+  #has_many :products, through: :cart_details, source: :product
 
   before_save { self.email = email.downcase } #self.email
   before_create :create_remember_token
