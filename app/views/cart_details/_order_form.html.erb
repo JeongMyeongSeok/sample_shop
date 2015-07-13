@@ -1,0 +1,12 @@
+<% unless check_current_cart_by_current_user.empty? %>
+  <div class="row-fluid">
+    <div class="span4 offset2">
+      <%= form_for(current_user.orders.build(user_id: current_user.id)) do |f| %>
+      <%= f.hidden_field :user_id %>
+      <%= f.submit "レジに進む", class: "btn btn-large" %>
+      <% end %>
+    </div>
+  </div>
+<% else %>
+  <h2>商品を追加してください</h2>
+<% end %>

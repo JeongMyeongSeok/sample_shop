@@ -26,10 +26,10 @@ ActiveRecord::Schema.define(version: 20150713022439) do
   add_index "cart_details", ["user_id", "product_id"], name: "index_cart_details_on_user_id_and_product_id", unique: true, using: :btree
 
   create_table "commonly_used_destinations", force: :cascade do |t|
-    t.integer  "user_id",    limit: 4
-    t.string   "name",       limit: 255
-    t.string   "address",    limit: 255
-    t.integer  "phone",      limit: 4
+    t.integer  "user_id",    limit: 4,   null: false
+    t.string   "name",       limit: 255, null: false
+    t.string   "address",    limit: 255, null: false
+    t.integer  "phone",      limit: 4,   null: false
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
   end
@@ -37,10 +37,10 @@ ActiveRecord::Schema.define(version: 20150713022439) do
   add_index "commonly_used_destinations", ["user_id"], name: "index_commonly_used_destinations_on_user_id", using: :btree
 
   create_table "order_details", force: :cascade do |t|
-    t.integer  "order_id",   limit: 4
-    t.integer  "product_id", limit: 4
-    t.integer  "price",      limit: 4
-    t.integer  "quantity",   limit: 4
+    t.integer  "order_id",   limit: 4, null: false
+    t.integer  "product_id", limit: 4, null: false
+    t.integer  "price",      limit: 4, null: false
+    t.integer  "quantity",   limit: 4, null: false
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
   end
@@ -48,10 +48,10 @@ ActiveRecord::Schema.define(version: 20150713022439) do
   add_index "order_details", ["order_id", "product_id"], name: "index_order_details_on_order_id_and_product_id", unique: true, using: :btree
 
   create_table "orders", force: :cascade do |t|
-    t.integer  "user_id",    limit: 4
-    t.string   "name",       limit: 255
-    t.string   "address",    limit: 255
-    t.integer  "phone",      limit: 4
+    t.integer  "user_id",    limit: 4,   null: false
+    t.string   "name",       limit: 255, null: false
+    t.string   "address",    limit: 255, null: false
+    t.integer  "phone",      limit: 4,   null: false
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
   end

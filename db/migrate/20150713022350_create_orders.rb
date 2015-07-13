@@ -1,10 +1,10 @@
 class CreateOrders < ActiveRecord::Migration
   def change
     create_table :orders do |t|
-      t.integer :user_id
-      t.string :name
-      t.string :address
-      t.integer :phone
+      t.integer :user_id, null: false
+      t.string :name,     null: false
+      t.string :address,  null: false
+      t.integer :phone,   null: false
 
       t.timestamps null: false
     end

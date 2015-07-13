@@ -2,7 +2,7 @@ class CartDetailsController < ApplicationController
   before_action :signed_in_user, only: [:show]
 
   def show
-    @cart_details = CartDetail.where("user_id = ?", current_user.id)
+    @cart_details = check_current_cart_by_current_user
   end
 
   def create

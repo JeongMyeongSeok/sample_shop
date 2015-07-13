@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   resources :sessions, only: [:new, :create, :destory]
   resources :products, only: [:show]
   resources :cart_details
+  resources :orders, only: [:create]
 
   get 'signup' => 'users#new'
   get 'signin' => 'sessions#new'
