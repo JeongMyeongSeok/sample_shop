@@ -8,9 +8,15 @@
           <%= display_price %>円
           <%= link_to "商品削除", cart_detail, method: :delete, data: { confirm: "本当ですか?" } %> 
           <%= form_for(cart_detail) do |f| %>
-            <%= f.label :数量 %>
-            <%= f.number_field :quantity, min: 1, max:9 %>
-            <%= f.submit "変更", class: "btn btn-small", data: { disable_with: "送信中"} %>
+          在庫 : <%= cart_detail.product.stock %>
+            <% if cart_detail.product.stock < 9 %>
+              <% max = cart_detail.product.stock %>
+              <%= f.number_field :quantity, min: 1, max: "#{max}" %>
+              <%= f.submit "変更", class: "btn btn-small", data: { disable_with: "送信中"} %>
+            <% else %>
+              <%= f.number_field :quantity, min: 1, max: 9 %>
+              <%= f.submit "変更", class: "btn btn-small", data: { disable_with: "送信中"} %>
+            <% end %>
           <% end %>
       <% end %>
     </div>

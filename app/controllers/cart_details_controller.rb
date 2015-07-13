@@ -1,6 +1,6 @@
 class CartDetailsController < ApplicationController
   before_action :signed_in_user, only: [:show]
-  before_action :check_stock, only: [:create, :update]
+  before_action :check_stock, only: [:create]
 
   def show
     @cart_details = check_current_cart_by_current_user
@@ -20,7 +20,7 @@ class CartDetailsController < ApplicationController
   def destroy
     product_in_the_cart = CartDetail.find_by("id = ?", params[:id])
     if product_in_the_cart.nil?
-      flash[:notice] = "すでに商品は削除されました"
+      flash[:error] = "すでに商品は削除されました"
       redirect_to cart_detail_path(current_user)
     else
       product_in_the_cart.destroy
@@ -38,7 +38,7 @@ class CartDetailsController < ApplicationController
       flash[:success] = "正常に変更されました"
       redirect_to cart_detail_path(current_user)
     else
-      flash[:notice] = "すでに商品は削除されました"
+      flash[:error] = "すでに商品は削除されました"
       redirect_to cart_detail_path(current_user)
     end
   end
@@ -46,7 +46,12 @@ class CartDetailsController < ApplicationController
   private
   
   def check_stock
-
+    product = Product.find_by("id = ?", params[:cart_detail][:product_id])
+    cart_product = CartDetail.find_by(user_id: current_user.id, product_id: product.id)
+    if !cart_product.nil? && (cart_product.quantity.to_i + product_quantity.to_i > product.stock)
+      flash[:error] = "在庫(#{product.stock}) | カートにある該当商品の数 (#{cart_product.quantity})"
+      redirect_to product_path(product)
+    end
   end
 
   def quantity_param
