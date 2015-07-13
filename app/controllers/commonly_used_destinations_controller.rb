@@ -16,9 +16,6 @@ class CommonlyUsedDestinationsController < ApplicationController
     if @address.destroy
       flash[:success] = "削除されました"
       redirect_to address_order_path(current_user)
-    else
-      flash[:error] = "error"
-      redirect_to address_order_path(current_user)
     end
   end
 
@@ -39,7 +36,8 @@ class CommonlyUsedDestinationsController < ApplicationController
   def selected_address_for_edit
     @address = CommonlyUsedDestination.find_by(id: params[:id], user_id: current_user.id)
     if @address.nil?
-      redirect_to root_url
+      flash[:error] = "重複操作"
+      redirect_to address_order_path(current_user)
     end
   end
 

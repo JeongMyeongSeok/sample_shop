@@ -44,7 +44,7 @@ class User < ActiveRecord::Base
     end
   end
 
-  def minus_product_in_cart(cart_detail, quantity)
+  def update_product_in_cart(cart_detail, quantity)
     #cart_product = CartDetail.find_by(id: params[:id])
     all_price = (cart_detail.product.price * quantity.to_i)
     cart_detail.update(price: all_price)
