@@ -1,6 +1,5 @@
 class CartDetailsController < ApplicationController
   before_action :signed_in_user, only: [:show]
-  before_action :check_stock, only: [:create, :update]
 
   def show
     @cart_details = check_current_cart_by_current_user
@@ -18,16 +17,23 @@ class CartDetailsController < ApplicationController
   end
 
   def destroy
-    product_in_the_cart = selected_product_in_the_cart
-    product_in_the_cart.destroy
-    redirect_to cart_detail_path(current_user)
+    product_in_the_cart = CartDetail.find_by("id = ?", params[:id])
+    if product_in_the_cart.nil?
+      flash[:notice] = "すでに商品は削除されました"
+      redirect_to cart_detail_path(current_user)
+    else
+      product_in_the_cart.destroy
+      flash[:success] = "正常に削除されました"
+      redirect_to cart_detail_path(current_user)
+    end
   end
 
   def update
-    product_in_the_cart = selected_product_in_the_cart
+    product_in_the_cart = CartDetail.find_by("id = ?", params[:id])
     if product_in_the_cart.update_attributes(quantity_param)
       selected_quantity = product_quantity
       current_user.update_product_in_cart(product_in_the_cart, selected_quantity)
+      flash[:success] = "正常に変更されました"
       redirect_to cart_detail_path(current_user)
     else
       redirect_to cart_detail_path(current_user)
@@ -35,14 +41,7 @@ class CartDetailsController < ApplicationController
   end
 
   private
-  def check_stock
-    
-  end
-
-  def selected_product_in_the_cart
-    CartDetail.find_by("id = ?", params[:id])
-  end
-
+  
   def quantity_param
     params.require(:cart_detail).permit(:quantity)
   end
