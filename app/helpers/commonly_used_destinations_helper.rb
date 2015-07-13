@@ -1,0 +1,2 @@
+module CommonlyUsedDestinationsHelper
+end

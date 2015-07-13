@@ -1,0 +1,2 @@
+class CommonlyUsedDestinationsController < ApplicationController
+end
