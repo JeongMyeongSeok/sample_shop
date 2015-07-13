@@ -36,7 +36,7 @@ class CommonlyUsedDestinationsController < ApplicationController
   def selected_address_for_edit
     @address = CommonlyUsedDestination.find_by(id: params[:id], user_id: current_user.id)
     if @address.nil?
-      flash[:error] = "重複操作"
+      flash[:error] = "すでに削除されてあります"
       redirect_to address_order_path(current_user)
     end
   end
