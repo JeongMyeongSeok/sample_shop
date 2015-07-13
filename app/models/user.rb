@@ -49,8 +49,8 @@ class User < ActiveRecord::Base
     all_price = (cart_detail.product.price * quantity.to_i)
     cart_detail.update(price: all_price)
   end
-  private
 
+  private
 
   def create_remember_token
     self.remember_token = User.encrypt(User.new_remember_token) #User.remember_token
