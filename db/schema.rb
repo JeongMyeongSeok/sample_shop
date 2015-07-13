@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(version: 20150710083915) do
     t.datetime "updated_at",           null: false
   end
 
+  add_index "cart_details", ["product_id", "created_at"], name: "index_cart_details_on_product_id_and_created_at", using: :btree
   add_index "cart_details", ["user_id", "product_id"], name: "index_cart_details_on_user_id_and_product_id", unique: true, using: :btree
 
   create_table "products", force: :cascade do |t|

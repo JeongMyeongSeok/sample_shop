@@ -9,5 +9,6 @@ class CreateCartDetails < ActiveRecord::Migration
       t.timestamps null: false
     end
     add_index :cart_details, [:user_id, :product_id], unique: true
+    add_index :cart_details, [:product_id, :created_at]
   end
 end

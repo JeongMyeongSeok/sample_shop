@@ -6,6 +6,6 @@
   <%= form_for(cart_detail) do |f| %>
     <%= f.label :数量 %>
     <%= f.number_field :quantity, min: 1, max:9 %>
-    <%= f.submit "変更", class: "btn btn-small" %>
+    <%= f.submit "変更", class: "btn btn-small", data: { disable_with: "送信中"} %>
   <% end %>
 <% end %>
