@@ -29,7 +29,7 @@ ActiveRecord::Schema.define(version: 20150713022439) do
     t.integer  "user_id",    limit: 4,   null: false
     t.string   "name",       limit: 255, null: false
     t.string   "address",    limit: 255, null: false
-    t.integer  "phone",      limit: 4,   null: false
+    t.string   "phone",      limit: 255, null: false
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
   end
@@ -51,7 +51,7 @@ ActiveRecord::Schema.define(version: 20150713022439) do
     t.integer  "user_id",    limit: 4,   null: false
     t.string   "name",       limit: 255, null: false
     t.string   "address",    limit: 255, null: false
-    t.integer  "phone",      limit: 4,   null: false
+    t.string   "phone",      limit: 255, null: false
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
   end

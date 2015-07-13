@@ -1,10 +1,7 @@
 <% unless check_current_cart_by_current_user.empty? %>
   <div class="row-fluid">
     <div class="span4 offset2">
-      <%= form_for(current_user.orders.build(user_id: current_user.id)) do |f| %>
-      <%= f.hidden_field :user_id %>
-      <%= f.submit "レジに進む", class: "btn btn-large" %>
-      <% end %>
+      <%= link_to "レジに進む", address_order_path(current_user), class: "btn btn-large" %>
     </div>
   </div>
 <% else %>
