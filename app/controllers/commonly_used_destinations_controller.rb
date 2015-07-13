@@ -1,5 +1,5 @@
 class CommonlyUsedDestinationsController < ApplicationController
-  before_action :selected_address_for_edit, only: [:edit, :update]
+  before_action :selected_address_for_edit, only: [:edit, :update, :destroy]
 
   def create
     @address = CommonlyUsedDestination.new(address_params)
@@ -13,11 +13,16 @@ class CommonlyUsedDestinationsController < ApplicationController
   end
 
   def destroy
-
+    if @address.destroy
+      flash[:success] = "削除されました"
+      redirect_to address_order_path(current_user)
+    else
+      flash[:error] = "error"
+      redirect_to address_order_path(current_user)
+    end
   end
 
   def edit
-
   end
 
   def update
