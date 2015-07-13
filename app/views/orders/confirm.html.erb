@@ -1,0 +1,16 @@
+<br>
+<li>注文者 : <%= @address.name %></li>
+<li>配送値 : <%= @address.address %></li>
+<li>電話番語 : <%= @address.phone %></li>
+</br>
+<div class="row">
+  <div class="span5">
+    <%  @products_in_cart.each do |product_in_cart| %>
+      <%= image_tag(product_in_cart.product.picture, size: "100x100") %>
+      <%= product_in_cart.product.name %>
+      <%= product_in_cart.price %>円
+      | 数量 : <%= product_in_cart.quantity %>
+    <% end %>
+  </div>
+  <div class="span3 offset2">...</div>
+</div>

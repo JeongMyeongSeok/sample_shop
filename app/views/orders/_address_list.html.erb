@@ -5,8 +5,8 @@
   <span><%= address_list.address %></span>
   <span>(<%= address_list.phone %>)</span>
   <span></span>
-  <br><%= render partial: 'address_confirm', locals: { address_list: address_list } %>
-      <%= render partial: 'address_delete' , locals: { address_list: address_list } %>
+  <br><%= render partial: 'address_confirm', locals: { address_list: address_list } %> | 
+      <%= render partial: 'address_delete' , locals: { address_list: address_list } %> | 
       <%= render partial: 'address_edit'   , locals: { address_list: address_list } %>
   </br>
 </li>
