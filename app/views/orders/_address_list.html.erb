@@ -1,7 +1,14 @@
 <% @address_list.each do |address_list| %>
+<p>
 <li>
-  <span class="content"><%= address_list.name %></span>
+  <span class="content">名前 : <%= address_list.name %></span>
   <span><%= address_list.address %></span>
-  <span><%= address_list.phone %></span>
+  <span>(<%= address_list.phone %>)</span>
+  <span></span>
+  <br><%= render partial: 'address_confirm', locals: { address_list: address_list } %>
+      <%= render partial: 'address_delete' , locals: { address_list: address_list } %>
+      <%= render partial: 'address_edit'   , locals: { address_list: address_list } %>
+  </br>
 </li>
+</p>
 <% end %>
