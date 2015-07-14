@@ -1,21 +1,16 @@
-<div class="container-fluid">
-  <div class="row-fluid">
-    <div class="span2">
-      <% @cart_details.each do |cart_detail| %>
-          <%= link_to image_tag(cart_detail.product.picture, :size => "100x100"), 
-                          controller: "products", action: "show" ,id: cart_detail.product.id %>
-          <%= cart_detail.price %>円
-          <%= link_to "商品削除", cart_detail, method: :delete, data: { confirm: "本当ですか?" } %> 
-          <%= form_for(cart_detail) do |f| %>
-            在庫 : <%= cart_detail.product.stock %>
-            <% cart_detail.product.stock < 9 ? max = cart_detail.product.stock : max = 9 %>
-            <%= f.number_field :quantity, min: 1, max: "#{max}" %>
-            <%= f.submit "変更", class: "btn btn-small", data: { disable_with: "送信中"} %>
-          <% end %>
-      <% end %>
+<% @cart_details.each do |cart_detail| %>
+  <%= link_to image_tag(cart_detail.product.picture, :size => "100x100"), 
+                      controller: "products", action: "show" ,id: cart_detail.product.id %>
+  <%= cart_detail.price %>円  
+  <%= cart_detail.quantity %>個 | 
+  在庫 : <%= cart_detail.product.stock %>
+  <%= form_for(cart_detail) do |f| %>
+    <div>
+    <% cart_detail.product.stock < 9 ? max = cart_detail.product.stock : max = 9 %>
+    <%= f.number_field :quantity, min: 1, max: "#{max}" %>
+    <%= f.submit "変更", class: "btn btn-small", data: { disable_with: "送信中"} %>
+    <%= link_to "商品削除", cart_detail, method: :delete, data: { confirm: "本当ですか?" } %>
     </div>
-    <div class="span10">
-      <%= render "order_form" %>
-    </div>
-  </div>
-</div>
+  <% end %>    
+<% end %>
+<%= render "order_form" %>

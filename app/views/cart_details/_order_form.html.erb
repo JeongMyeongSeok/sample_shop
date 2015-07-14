@@ -1,9 +1,5 @@
 <% unless check_current_cart_by_current_user.empty? %>
-  <div class="row-fluid">
-    <div class="span4 offset2">
-      <%= link_to "レジに進む", address_order_path(current_user), class: "btn btn-large" %>
-    </div>
-  </div>
+  <%= link_to "レジに進む", address_order_path(current_user), class: "btn btn-small" %>
 <% else %>
   <% flash.now[:notice] = "カートに商品を入れてください" %>
 <% end %>

@@ -13,7 +13,7 @@ class CartDetailsController < ApplicationController
     if current_user.add_product_to_cart(selected_product, selected_quantity)
       redirect_to cart_details_path
     else
-      flash[:error] = "カートに商品を10個以上入れるのはできません"
+      flash[:error] = "カートには一つの商品にあたり最大9個入れることができます"
       redirect_to cart_details_path
     end
   end
