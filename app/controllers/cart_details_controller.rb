@@ -1,19 +1,19 @@
 class CartDetailsController < ApplicationController
-  before_action :signed_in_user, only: [:show]
+  before_action :signed_in_user, only: [:index, :show]
   before_action :check_stock, only: [:create]
 
-  def show
+  def index
     @cart_details = check_current_cart_by_current_user
   end
 
   def create
     selected_product = Product.find_by("id = ?", params[:cart_detail][:product_id])
     selected_quantity = product_quantity
-    if current_user.add_product_to_cart(current_user, selected_product, selected_quantity)
-      redirect_to cart_detail_path(current_user)
+    if current_user.add_product_to_cart(selected_product, selected_quantity)
+      redirect_to cart_details_path
     else
       flash[:error] = "カートに商品を10個以上入れるのはできません"
-      redirect_to product_path(selected_product)
+      redirect_to cart_details_path
     end
   end
 
@@ -21,11 +21,11 @@ class CartDetailsController < ApplicationController
     product_in_the_cart = CartDetail.find_by("id = ?", params[:id])
     if product_in_the_cart.nil?
       flash[:error] = "すでに商品は削除されました"
-      redirect_to cart_detail_path(current_user)
+      redirect_to cart_details_path
     else
       product_in_the_cart.destroy
       flash[:success] = "正常に削除されました"
-      redirect_to cart_detail_path(current_user)
+      redirect_to cart_details_path
     end
   end
 
@@ -36,10 +36,10 @@ class CartDetailsController < ApplicationController
       selected_quantity = product_quantity
       current_user.update_product_in_cart(product_in_the_cart, selected_quantity)
       flash[:success] = "正常に変更されました"
-      redirect_to cart_detail_path(current_user)
+      redirect_to cart_details_path
     else
       flash[:error] = "すでに商品は削除されました"
-      redirect_to cart_detail_path(current_user)
+      redirect_to cart_details_path
     end
   end
 

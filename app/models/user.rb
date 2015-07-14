@@ -32,8 +32,8 @@ class User < ActiveRecord::Base
     Digest::SHA1.hexdigest(token.to_s)
   end
   
-  def add_product_to_cart(user, product, quantity)
-    specified_product = CartDetail.find_by(user_id: user.id, product_id: product.id)
+  def add_product_to_cart(product, quantity)
+    specified_product = CartDetail.find_by(user_id: self.id, product_id: product.id)
     price_per_quantity = product.price * quantity.to_i
     if specified_product
       all_price = (specified_product.price + price_per_quantity)
