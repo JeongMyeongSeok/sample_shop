@@ -1,6 +1,7 @@
 class CartDetailsController < ApplicationController
   before_action :signed_in_user, only: [:index, :create, :destroy, :update]
   before_action :check_stock, only: [:create]
+  before_action :check_price, only: [:index]
 
   def index
     @cart_details = check_current_cart_by_current_user
@@ -44,7 +45,21 @@ class CartDetailsController < ApplicationController
   end
 
   private
-  
+
+  def check_price
+    cart_details = check_current_cart_by_current_user
+    cart_details.each do |cart_detail|
+      price_per_quantity = (cart_detail.price / cart_detail.quantity)
+      if price_per_quantity != cart_detail.product.price
+        real_price = cart_detail.product.price * cart_detail.quantity
+        context = "#{cart_detail.product.name}の値段が変更されました. すみません
+                   #{price_per_quantity}円 -> #{cart_detail.product.price}円"
+        flash.now[:notice] = "#{context}"
+        cart_detail.update(price: real_price)
+      end
+    end
+  end
+    
   def check_stock
     product = Product.find_by("id = ?", params[:cart_detail][:product_id])
     cart_product = CartDetail.find_by(user_id: current_user.id, product_id: product.id)
