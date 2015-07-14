@@ -1,9 +1,10 @@
 <% if signed_in? %>
   <%= form_for(current_user.cart_details.build(product_id: @product.id)) do |f| %>
-    <div><%= f.number_field :quantity, value: 1,  max: 9, min: 1 %></div>
+    <% @product.stock < 9 ? max_stock = @product.stock : max_stock = 9 %>
+    <div><%= f.number_field :quantity, value: 1,  max: "#{max_stock}", min: 1 %></div>
     <div><%= f.hidden_field :product_id %></div>
     <%= f.submit "カートに入れる", data: { disable_with: "送信中" }, 
-                                class: "btn btn-large btn-primary" %>
+                              class: "btn btn-large btn-primary" %>
   <% end %>
 <% else %>
   <a class="btn btn-primary btn-lg", href= "http://localhost:3000/signup", role="button">Join Us</a>

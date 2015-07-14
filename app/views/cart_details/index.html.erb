@@ -2,21 +2,15 @@
   <div class="row-fluid">
     <div class="span2">
       <% @cart_details.each do |cart_detail| %>
-        <% display_price = synchronization_product_price(cart_detail) %>
           <%= link_to image_tag(cart_detail.product.picture, :size => "100x100"), 
                           controller: "products", action: "show" ,id: cart_detail.product.id %>
-          <%= display_price %>円
+          <%= cart_detail.price %>円
           <%= link_to "商品削除", cart_detail, method: :delete, data: { confirm: "本当ですか?" } %> 
           <%= form_for(cart_detail) do |f| %>
-          在庫 : <%= cart_detail.product.stock %>
-            <% if cart_detail.product.stock < 9 %>
-              <% max = cart_detail.product.stock %>
-              <%= f.number_field :quantity, min: 1, max: "#{max}" %>
-              <%= f.submit "変更", class: "btn btn-small", data: { disable_with: "送信中"} %>
-            <% else %>
-              <%= f.number_field :quantity, min: 1, max: 9 %>
-              <%= f.submit "変更", class: "btn btn-small", data: { disable_with: "送信中"} %>
-            <% end %>
+            在庫 : <%= cart_detail.product.stock %>
+            <% cart_detail.product.stock < 9 ? max = cart_detail.product.stock : max = 9 %>
+            <%= f.number_field :quantity, min: 1, max: "#{max}" %>
+            <%= f.submit "変更", class: "btn btn-small", data: { disable_with: "送信中"} %>
           <% end %>
       <% end %>
     </div>

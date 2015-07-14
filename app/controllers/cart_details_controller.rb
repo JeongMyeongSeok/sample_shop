@@ -1,5 +1,5 @@
 class CartDetailsController < ApplicationController
-  before_action :signed_in_user, only: [:index, :show]
+  before_action :signed_in_user, only: [:index, :create, :destroy, :update]
   before_action :check_stock, only: [:create]
 
   def index

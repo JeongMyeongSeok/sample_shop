@@ -34,12 +34,12 @@ class User < ActiveRecord::Base
   
   def add_product_to_cart(product, quantity)
     specified_product = CartDetail.find_by(user_id: self.id, product_id: product.id)
-    price_per_quantity = product.price * quantity.to_i
     if specified_product
-      all_price = (specified_product.price + price_per_quantity)
-      all_quantity = (specified_product.quantity + quantity.to_i)
-      specified_product.update(price: all_price, quantity: all_quantity)
+      specified_product_quantity = specified_product.quantity.to_i + quantity.to_i
+      specified_product_product = (specified_product.product.price * specified_product_quantity)
+      specified_product.update(price: specified_product_product, quantity: specified_product_quantity)
     else
+      price_per_quantity = product.price * quantity.to_i
       cart_details.create(product_id: product.id, quantity: quantity, price: price_per_quantity)
     end
   end

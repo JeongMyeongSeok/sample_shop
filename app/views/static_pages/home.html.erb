@@ -1,4 +1,7 @@
+user : <%= current_user.name %>
+<div>
 <% @products.each do |product| %>
   <%= link_to image_tag(product.picture, :size => "150x150"), controller: "products", action: "show" ,id: product.id %>
 <% end %>
 <%= will_paginate @products %>
+</div>
