@@ -8,6 +8,7 @@
     <div>
     <% cart_detail.product.stock < 9 ? max = cart_detail.product.stock : max = 9 %>
     <%= f.number_field :quantity, min: 1, max: "#{max}" %>
+    <%= f.hidden_field :product_id, value: cart_detail.product.id %>
     <%= f.submit "変更", class: "btn btn-small", data: { disable_with: "送信中"} %>
     <%= link_to "商品削除", cart_detail, method: :delete, data: { confirm: "本当ですか?" } %>
     </div>

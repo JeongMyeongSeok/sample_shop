@@ -1,15 +1,15 @@
 class CartDetailsController < ApplicationController
   before_action :signed_in_user, only: [:index, :create, :destroy, :update]
-  before_action :check_stock, only: [:create]
+  before_action :check_stock, only: [:create, :update]
   before_action :check_price, only: [:index]
 
   def index
-    @cart_details = check_current_cart_by_current_user
+    @cart_details = get_current_cart_by_current_user
   end
 
   def create
     selected_product = Product.find_by("id = ?", params[:cart_detail][:product_id])
-    selected_quantity = product_quantity
+    selected_quantity = selected_quantity_params
     if current_user.add_product_to_cart(selected_product, selected_quantity)
       redirect_to cart_details_path
     else
@@ -33,8 +33,8 @@ class CartDetailsController < ApplicationController
   def update
     product_in_the_cart = CartDetail.find_by("id = ?", params[:id])
     if !product_in_the_cart.nil? 
-      product_in_the_cart.update_attributes(quantity_param)
-      selected_quantity = product_quantity
+      product_in_the_cart.update_attributes(quantity_params)
+      selected_quantity = selected_quantity_params
       current_user.update_product_in_cart(product_in_the_cart, selected_quantity)
       flash[:success] = "正常に変更されました"
       redirect_to cart_details_path
@@ -47,33 +47,40 @@ class CartDetailsController < ApplicationController
   private
 
   def check_price
-    cart_details = check_current_cart_by_current_user
+    cart_details = get_current_cart_by_current_user
     cart_details.each do |cart_detail|
-      price_per_quantity = (cart_detail.price / cart_detail.quantity)
-      if price_per_quantity != cart_detail.product.price
-        real_price = cart_detail.product.price * cart_detail.quantity
-        context = "#{cart_detail.product.name}の値段が変更されました. すみません
-                   #{price_per_quantity}円 -> #{cart_detail.product.price}円"
+      price_per_one = (cart_detail.price / cart_detail.quantity)
+      if price_per_one != cart_detail.product.price
+        price_per_quantity = cart_detail.product.price * cart_detail.quantity
+        context = "#{cart_detail.product.name}の値段が変更されました.
+                   #{price_per_one}円 -> #{cart_detail.product.price}円"
         flash.now[:notice] = "#{context}"
-        cart_detail.update(price: real_price)
+        cart_detail.update_attribute(:price, price_per_quantity)
       end
     end
   end
     
   def check_stock
     product = Product.find_by("id = ?", params[:cart_detail][:product_id])
-    cart_product = CartDetail.find_by(user_id: current_user.id, product_id: product.id)
-    if !cart_product.nil? && (cart_product.quantity.to_i + product_quantity.to_i > product.stock)
-      flash[:error] = "在庫(#{product.stock}) | カートにある該当商品の数 (#{cart_product.quantity})"
-      redirect_to product_path(product)
+    cart_detail = CartDetail.find_by(user_id: current_user.id, product_id: product.id)
+    if cart_detail.nil?
+      if selected_quantity_params.to_i > product.stock
+        flash[:error] = "在庫不足"
+        redirect_to product_path(product)
+      end
+    else
+      if(cart_detail.quantity.to_i + selected_quantity_params.to_i) > product.stock 
+        flash[:error] = "在庫不足"
+        redirect_to product_path(product)
+      end
     end
   end
 
-  def quantity_param
+  def quantity_params
     params.require(:cart_detail).permit(:quantity)
   end
 
-  def product_quantity
+  def selected_quantity_params
     params[:cart_detail][:quantity]
   end
 end

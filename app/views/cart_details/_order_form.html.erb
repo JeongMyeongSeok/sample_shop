@@ -1,4 +1,4 @@
-<% unless check_current_cart_by_current_user.empty? %>
+<% unless get_current_cart_by_current_user.empty? %>
   <%= link_to "レジに進む", address_order_path(current_user), class: "btn btn-small" %>
 <% else %>
   <% flash.now[:notice] = "カートに商品を入れてください" %>
