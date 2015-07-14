@@ -1,6 +1,7 @@
 class CartDetailsController < ApplicationController
   before_action :signed_in_user, only: [:index, :create, :destroy, :update]
-  before_action :check_stock, only: [:create, :update]
+  before_action :check_stock_create, only: [:create]
+  before_action :check_stock_update, only: [:update]
   before_action :check_price, only: [:index]
 
   def index
@@ -60,7 +61,7 @@ class CartDetailsController < ApplicationController
     end
   end
     
-  def check_stock
+  def check_stock_create
     product = Product.find_by("id = ?", params[:cart_detail][:product_id])
     cart_detail = CartDetail.find_by(user_id: current_user.id, product_id: product.id)
     if cart_detail.nil?
@@ -73,6 +74,14 @@ class CartDetailsController < ApplicationController
         flash[:error] = "在庫不足"
         redirect_to product_path(product)
       end
+    end
+  end
+
+  def check_stock_update
+    product = Product.find_by("id = ?", params[:cart_detail][:product_id])
+    if selected_quantity_params.to_i > product.stock
+      flash[:error] = "在庫不足"
+      redirect_to product_path(product)
     end
   end
 

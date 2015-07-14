@@ -1,5 +1,5 @@
 class OrdersController < ApplicationController
-  before_action :check_stock, only: [:address, :confirm]
+  before_action :check_stock_before_step_to_create_address, only: [:address, :confirm]
 
   def address
     @address = current_user.commonly_used_destinations.build
@@ -16,7 +16,7 @@ class OrdersController < ApplicationController
 
   private
 
-  def check_stock
+  def check_stock_before_step_to_create_address
     cart_details = current_user.cart_details
     cart_details.each do |cart_detail|
       if cart_detail.quantity > cart_detail.product.stock

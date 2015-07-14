@@ -16,6 +16,8 @@ class CommonlyUsedDestinationsController < ApplicationController
     if @address.destroy
       flash[:success] = "削除されました"
       redirect_to address_order_path(current_user)
+    else
+      render "edit"
     end
   end
 
